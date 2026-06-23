@@ -246,6 +246,75 @@
       color: inherit;
       display: block;
     }
+
+    /* Secret Game */
+    .game-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 30, 60, 0.95);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .game-modal.active {
+      display: flex;
+    }
+
+    .game-container {
+      background: #0f1e3c;
+      border: 3px solid #2563eb;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 20px 60px rgba(37, 99, 235, 0.3);
+    }
+
+    #gameCanvas {
+      background: #1a2a4a;
+      display: block;
+      border: 2px solid #2563eb;
+      border-radius: 4px;
+    }
+
+    .game-info {
+      color: #e8f0f7;
+      text-align: center;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+
+    .game-score {
+      color: #2563eb;
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .game-instructions {
+      color: #999;
+      font-size: 12px;
+      margin-top: 12px;
+    }
+
+    .close-game {
+      color: #2563eb;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      transition: color 0.2s;
+    }
+
+    .close-game:hover {
+      color: #60a5fa;
+    }
   </style>
 </head>
 <body>
@@ -306,5 +375,154 @@
       </section>
     </div>
   </div>
+
+  <!-- Secret Snake Game -->
+  <div id="gameModal" class="game-modal">
+    <span class="close-game">&times;</span>
+    <div class="game-container">
+      <canvas id="gameCanvas" width="300" height="300"></canvas>
+      <div class="game-info">
+        <div class="game-score">Score: <span id="score">0</span></div>
+        <div class="game-instructions">Use arrow keys or WASD to move. Press ESC to quit.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const gameModal = document.getElementById('gameModal');
+    const scoreDisplay = document.getElementById('score');
+    const closeBtn = document.querySelector('.close-game');
+
+    // Game variables
+    const gridSize = 10;
+    const tileCount = canvas.width / gridSize;
+    let snake = [{x: 5, y: 5}];
+    let food = {x: Math.floor(Math.random() * tileCount), y: Math.floor(Math.random() * tileCount)};
+    let direction = {x: 1, y: 0};
+    let nextDirection = {x: 1, y: 0};
+    let score = 0;
+    let gameActive = false;
+
+    // Draw function
+    function draw() {
+      ctx.fillStyle = '#1a2a4a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw food
+      ctx.fillStyle = '#ff6b6b';
+      ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 1, gridSize - 1);
+
+      // Draw snake
+      ctx.fillStyle = '#2563eb';
+      snake.forEach((segment, index) => {
+        ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize - 1, gridSize - 1);
+        if (index === 0) {
+          ctx.fillStyle = '#60a5fa';
+        }
+      });
+    }
+
+    function update() {
+      if (!gameActive) return;
+
+      direction = nextDirection;
+      const head = {x: snake[0].x + direction.x, y: snake[0].y + direction.y};
+
+      // Check collisions with walls
+      if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+        endGame();
+        return;
+      }
+
+      // Check collision with self
+      for (let segment of snake) {
+        if (head.x === segment.x && head.y === segment.y) {
+          endGame();
+          return;
+        }
+      }
+
+      snake.unshift(head);
+
+      // Check if food eaten
+      if (head.x === food.x && head.y === food.y) {
+        score += 10;
+        scoreDisplay.textContent = score;
+        food = {x: Math.floor(Math.random() * tileCount), y: Math.floor(Math.random() * tileCount)};
+      } else {
+        snake.pop();
+      }
+    }
+
+    function gameLoop() {
+      update();
+      draw();
+      if (gameActive) {
+        setTimeout(gameLoop, 100);
+      }
+    }
+
+    function startGame() {
+      gameActive = true;
+      gameLoop();
+    }
+
+    function endGame() {
+      gameActive = false;
+      alert(`Game Over! Final Score: ${score}`);
+      resetGame();
+    }
+
+    function resetGame() {
+      snake = [{x: 5, y: 5}];
+      food = {x: Math.floor(Math.random() * tileCount), y: Math.floor(Math.random() * tileCount)};
+      direction = {x: 1, y: 0};
+      nextDirection = {x: 1, y: 0};
+      score = 0;
+      scoreDisplay.textContent = score;
+      draw();
+    }
+
+    // Keyboard controls
+    document.addEventListener('keydown', (e) => {
+      if (!gameModal.classList.contains('active')) {
+        // Secret code: press 'g' to start game
+        if (e.key === 'g' || e.key === 'G') {
+          gameModal.classList.add('active');
+          resetGame();
+          startGame();
+        }
+      } else {
+        // In-game controls
+        if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+          if (direction.y === 0) nextDirection = {x: 0, y: -1};
+          e.preventDefault();
+        } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+          if (direction.y === 0) nextDirection = {x: 0, y: 1};
+          e.preventDefault();
+        } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+          if (direction.x === 0) nextDirection = {x: -1, y: 0};
+          e.preventDefault();
+        } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+          if (direction.x === 0) nextDirection = {x: 1, y: 0};
+          e.preventDefault();
+        } else if (e.key === 'Escape') {
+          gameActive = false;
+          gameModal.classList.remove('active');
+        }
+      }
+    });
+
+    // Close button
+    closeBtn.addEventListener('click', () => {
+      gameActive = false;
+      gameModal.classList.remove('active');
+    });
+
+    // Initial draw
+    draw();
+  </script>
 </body>
 </html>
