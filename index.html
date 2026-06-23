@@ -95,13 +95,15 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
       padding: 12px;
       border: 1px solid #f0f0f0;
       border-radius: 8px;
       font-size: 13px;
       text-align: center;
       transition: all 0.2s;
+      cursor: pointer;
+      min-height: 60px;
+      position: relative;
     }
 
     .investment-item:hover {
@@ -110,10 +112,29 @@
     }
 
     .investment-logo {
-      width: 32px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       border-radius: 4px;
       object-fit: contain;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .investment-item:hover .investment-logo {
+      opacity: 0;
+    }
+
+    .investment-name {
+      position: absolute;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      font-weight: 500;
+      font-size: 13px;
+      padding: 0 8px;
+    }
+
+    .investment-item:hover .investment-name {
+      opacity: 1;
     }
   </style>
 </head>
@@ -137,25 +158,32 @@
       <h2>investments</h2>
       <div class="investments-list">
         <div class="investment-item">
-          <span>treehouse labs</span>
+          <img src="https://logo.clearbit.com/treehouseLabs.com" alt="Treehouse Labs" class="investment-logo">
+          <span class="investment-name">Treehouse Labs</span>
         </div>
         <div class="investment-item">
-          <span>sail research</span>
+          <img src="https://logo.clearbit.com/sailresearch.io" alt="Sail Research" class="investment-logo">
+          <span class="investment-name">Sail Research</span>
         </div>
         <div class="investment-item">
-          <span>dimensional os</span>
+          <img src="https://logo.clearbit.com/dimensional.io" alt="Dimensional OS" class="investment-logo">
+          <span class="investment-name">Dimensional OS</span>
         </div>
         <div class="investment-item">
-          <span>metis</span>
+          <img src="https://logo.clearbit.com/metis.io" alt="Metis" class="investment-logo">
+          <span class="investment-name">Metis</span>
         </div>
         <div class="investment-item">
-          <span>ricursive intelligence</span>
+          <img src="https://logo.clearbit.com/ricursive.ai" alt="Ricursive Intelligence" class="investment-logo">
+          <span class="investment-name">Ricursive Intelligence</span>
         </div>
         <div class="investment-item">
-          <span>inferact</span>
+          <img src="https://logo.clearbit.com/inferact.io" alt="Inferact" class="investment-logo">
+          <span class="investment-name">Inferact</span>
         </div>
         <div class="investment-item">
-          <span>elorian</span>
+          <img src="https://logo.clearbit.com/elorian.ai" alt="Elorian" class="investment-logo">
+          <span class="investment-name">Elorian</span>
         </div>
       </div>
     </section>
