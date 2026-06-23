@@ -85,56 +85,30 @@
     }
 
     .investments-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
 
     .investment-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      border: 1px solid #f0f0f0;
-      border-radius: 8px;
-      font-size: 13px;
-      text-align: center;
-      transition: all 0.2s;
-      cursor: pointer;
-      min-height: 60px;
-      position: relative;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
     }
 
-    .investment-item:hover {
-      border-color: #ddd;
-      background: #fafafa;
+    .investment-item:last-child {
+      border-bottom: none;
     }
 
-    .investment-logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 4px;
-      object-fit: contain;
-      opacity: 1;
-      transition: opacity 0.3s ease;
+    .investment-item a {
+      color: #111;
+      text-decoration: none;
+      border-bottom: 1px solid #ddd;
+      transition: border-color 0.2s;
     }
 
-    .investment-item:hover .investment-logo {
-      opacity: 0;
-    }
-
-    .investment-name {
-      position: absolute;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      font-weight: 500;
-      font-size: 13px;
-      padding: 0 8px;
-    }
-
-    .investment-item:hover .investment-name {
-      opacity: 1;
+    .investment-item a:hover {
+      border-color: #111;
     }
   </style>
 </head>
@@ -158,32 +132,25 @@
       <h2>investments</h2>
       <div class="investments-list">
         <div class="investment-item">
-          <img src="https://logo.clearbit.com/treehouselabs.ai" alt="Treehouse Labs" class="investment-logo">
-          <span class="investment-name">Treehouse Labs</span>
+          <a href="https://treehouselabs.ai" target="_blank">Treehouse Labs</a>
         </div>
         <div class="investment-item">
-          <img src="https://logo.clearbit.com/sailresearch.com" alt="Sail Research" class="investment-logo">
-          <span class="investment-name">Sail Research</span>
+          <a href="https://www.sailresearch.com" target="_blank">Sail Research</a>
         </div>
         <div class="investment-item">
-          <img src="https://logo.clearbit.com/dimensionalos.com" alt="Dimensional OS" class="investment-logo">
-          <span class="investment-name">Dimensional OS</span>
+          <a href="https://dimensionalos.com" target="_blank">Dimensional OS</a>
         </div>
         <div class="investment-item">
-          <img src="https://logo.clearbit.com/withmetis.ai" alt="Metis" class="investment-logo">
-          <span class="investment-name">Metis</span>
+          <a href="https://www.withmetis.ai" target="_blank">Metis</a>
         </div>
         <div class="investment-item">
-          <img src="https://logo.clearbit.com/ricursive.com" alt="Ricursive Intelligence" class="investment-logo">
-          <span class="investment-name">Ricursive Intelligence</span>
+          <a href="https://www.ricursive.com" target="_blank">Ricursive Intelligence</a>
         </div>
         <div class="investment-item">
-          <img src="https://logo.clearbit.com/inferact.ai" alt="Inferact" class="investment-logo">
-          <span class="investment-name">Inferact</span>
+          <a href="https://inferact.ai" target="_blank">Inferact</a>
         </div>
         <div class="investment-item">
-          <img src="https://logo.clearbit.com/elorian.ai" alt="Elorian" class="investment-logo">
-          <span class="investment-name">Elorian</span>
+          <a href="https://elorian.ai" target="_blank">Elorian</a>
         </div>
       </div>
     </section>
