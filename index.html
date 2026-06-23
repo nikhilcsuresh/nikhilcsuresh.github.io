@@ -85,19 +85,35 @@
     }
 
     .investments-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
     }
 
     .investment-item {
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid #f0f0f0;
+      border-radius: 8px;
+      font-size: 13px;
+      text-align: center;
+      transition: all 0.2s;
     }
 
-    .investment-item:last-child {
-      border-bottom: none;
+    .investment-item:hover {
+      border-color: #ddd;
+      background: #fafafa;
+    }
+
+    .investment-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      object-fit: contain;
     }
   </style>
 </head>
@@ -120,13 +136,27 @@
     <section>
       <h2>investments</h2>
       <div class="investments-list">
-        <div class="investment-item">treehouse labs</div>
-        <div class="investment-item">sail research</div>
-        <div class="investment-item">dimensional os</div>
-        <div class="investment-item">metis</div>
-        <div class="investment-item">ricursive intelligence</div>
-        <div class="investment-item">inferact</div>
-        <div class="investment-item">elorian</div>
+        <div class="investment-item">
+          <span>treehouse labs</span>
+        </div>
+        <div class="investment-item">
+          <span>sail research</span>
+        </div>
+        <div class="investment-item">
+          <span>dimensional os</span>
+        </div>
+        <div class="investment-item">
+          <span>metis</span>
+        </div>
+        <div class="investment-item">
+          <span>ricursive intelligence</span>
+        </div>
+        <div class="investment-item">
+          <span>inferact</span>
+        </div>
+        <div class="investment-item">
+          <span>elorian</span>
+        </div>
       </div>
     </section>
   </div>
